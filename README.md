@@ -1,3 +1,0 @@
-# H A C K E R
-
-ITS A NMAP SCAN

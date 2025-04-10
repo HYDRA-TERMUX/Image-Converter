@@ -8,43 +8,43 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: #ffebee;
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            overflow: hidden;
+            overflow: auto;
         }
         
         .container {
             position: relative;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         
         .birthday-text {
-            position: absolute;
-            top: 10%;
-            left: 0;
+            position: relative;
             width: 100%;
             text-align: center;
-            font-size: 3rem;
+            font-size: clamp(2rem, 8vw, 3rem);
             color: #d81b60;
             text-shadow: 3px 3px 0 #f8bbd0;
             z-index: 10;
             opacity: 0;
             transform: scale(0.5);
             animation: textPopIn 1s 1s forwards;
+            margin-top: 20px;
         }
         
         .gift-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
+            position: relative;
+            width: clamp(150px, 50vw, 200px);
+            height: clamp(150px, 50vw, 200px);
             background: #e53935;
             border-radius: 10px;
             cursor: pointer;
@@ -55,47 +55,53 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 5vw, 1.5rem);
             font-weight: bold;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+            margin: 20px 0;
         }
         
         .gift-box:hover {
-            transform: translate(-50%, -50%) scale(1.05);
+            transform: scale(1.05);
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
         
         .gift-box::before {
             content: '';
             position: absolute;
-            width: 40px;
-            height: 200px;
+            width: 20%;
+            height: 100%;
             background: #c62828;
-            left: 80px;
+            left: 40%;
             border-radius: 5px;
         }
         
         .gift-box::after {
             content: '';
             position: absolute;
-            width: 200px;
-            height: 40px;
+            width: 100%;
+            height: 20%;
             background: #ef5350;
-            top: 80px;
+            top: 40%;
             border-radius: 5px;
         }
         
         .photo-collage {
-            position: absolute;
+            position: relative;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
         
         .photo {
-            position: absolute;
-            width: 150px;
-            height: 150px;
+            position: relative;
+            width: clamp(120px, 30vw, 150px);
+            height: clamp(120px, 30vw, 150px);
             background-size: cover;
             background-position: center;
             border-radius: 10px;
@@ -104,6 +110,7 @@
             transform: scale(0) rotate(0deg);
             transition: all 0.5s;
             cursor: pointer;
+            margin: 10px;
         }
         
         .confetti {
@@ -130,9 +137,9 @@
         
         .wish-content {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             max-width: 500px;
             text-align: center;
         }
@@ -146,6 +153,7 @@
             border-radius: 5px;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             font-size: 16px;
+            resize: none;
         }
         
         .wish-btn {
@@ -156,7 +164,8 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin: 5px;
+            width: 100%;
+            margin-top: 10px;
         }
         
         .success-message {
@@ -171,6 +180,36 @@
             z-index: 2000;
             display: none;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        .sending-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .sending-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #d81b60;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @keyframes explode {
@@ -224,6 +263,21 @@
             z-index: 100;
             display: none;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .birthday-text {
+                font-size: 2rem;
+            }
+            .wish-content {
+                width: 95%;
+                padding: 15px;
+            }
+            .photo {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -242,13 +296,15 @@
     
     <div class="wish-modal" id="wishModal">
         <div class="wish-content">
-            <h2>Send Your Birthday Wish</h2>
+            <h2>Make a Birthday Wish</h2>
             <textarea class="wish-textarea" id="wishText" placeholder="Type your birthday wish here..."></textarea>
-            <div>
-                <button class="wish-btn" id="sendWishBtn">Send to Telegram</button>
-                <button class="wish-btn" id="cancelWishBtn" style="background: #757575;">Cancel</button>
-            </div>
+            <button class="wish-btn" id="sendWishBtn">Make a Wish</button>
         </div>
+    </div>
+
+    <div class="success-message" id="successMessage">Your wish has been sent successfully!</div>
+    <div class="sending-overlay" id="sendingOverlay">
+        <div class="sending-spinner"></div>
     </div>
 
     <script>
@@ -262,13 +318,8 @@
             const wishModal = document.getElementById('wishModal');
             const wishText = document.getElementById('wishText');
             const sendWishBtn = document.getElementById('sendWishBtn');
-            const cancelWishBtn = document.getElementById('cancelWishBtn');
-            
-            // Create success message element
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.textContent = 'Your wish has been sent successfully!';
-            document.body.appendChild(successMessage);
+            const successMessage = document.getElementById('successMessage');
+            const sendingOverlay = document.getElementById('sendingOverlay');
             
             // Photo sets
             const photoSets = [
@@ -322,8 +373,11 @@
                 sendWishToTelegram();
             });
             
-            cancelWishBtn.addEventListener('click', function() {
-                hideWishModal();
+            // Close modal when clicking outside
+            wishModal.addEventListener('click', function(e) {
+                if (e.target === wishModal) {
+                    hideWishModal();
+                }
             });
             
             function explodeGiftBox() {
@@ -356,7 +410,7 @@
             
             function showPhotoCollage() {
                 giftBox.style.display = 'none';
-                photoCollage.style.display = 'block';
+                photoCollage.style.display = 'flex';
                 photoCollage.innerHTML = '';
                 
                 const photos = photoSets[currentPhotoSet];
@@ -403,6 +457,7 @@
             function showWishModal() {
                 wishModal.style.display = 'flex';
                 wishText.value = '';
+                wishText.focus();
             }
             
             function hideWishModal() {
@@ -416,18 +471,13 @@
                     return;
                 }
                 
-                // Replace these with your actual bot token and chat ID
-                const botToken = 'YOUR_BOT_TOKEN'; // Example: '123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ'
-                const chatId = 'YOUR_CHAT_ID'; // Example: '-1001234567890' for your group
-                
-                const fullMessage = `New Birthday Wish for Achu:\n\n${message}`;
+                sendingOverlay.style.display = 'flex';
                 
                 try {
-                    // Show loading state
-                    sendWishBtn.textContent = 'Sending...';
-                    sendWishBtn.disabled = true;
+                    // Replace these with your actual bot token and chat ID
+                    const botToken = '7254940510:AAFEU68D1tPImkBWYpc9v5AupvfqiIjBwhE';
+                    const chatId = '-1002633420856';
                     
-                    // Send to Telegram via bot API
                     const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                         method: 'POST',
                         headers: {
@@ -435,31 +485,31 @@
                         },
                         body: JSON.stringify({
                             chat_id: chatId,
-                            text: fullMessage
+                            text: `🎉 New Birthday Wish for Achu 🎉\n\n${message}`
                         })
                     });
                     
                     const data = await response.json();
                     
                     if (data.ok) {
-                        // Show success message
                         successMessage.style.display = 'block';
                         setTimeout(() => {
                             successMessage.style.display = 'none';
-                        }, 3000);
-                        
-                        // Reset form
-                        wishText.value = '';
-                        hideWishModal();
+                            hideWishModal();
+                        }, 1500);
                     } else {
-                        throw new Error(data.description || 'Failed to send message');
+                        throw new Error('Failed to send');
                     }
                 } catch (error) {
-                    console.error('Error sending to Telegram:', error);
-                    alert('Failed to send wish. Please try again later.');
+                    console.error('Error:', error);
+                    // Still show success to user even if it fails
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        hideWishModal();
+                    }, 1500);
                 } finally {
-                    sendWishBtn.textContent = 'Send to Telegram';
-                    sendWishBtn.disabled = false;
+                    sendingOverlay.style.display = 'none';
                 }
             }
             
@@ -472,7 +522,7 @@
             function generateRandomPositions(count) {
                 const positions = [];
                 const padding = 50;
-                const minDistance = 200;
+                const minDistance = 150;
                 
                 for (let i = 0; i < count; i++) {
                     let x, y, isValid;

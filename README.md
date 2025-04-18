@@ -8,7 +8,6 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/HYDRA-TERMUX/Image-Converter?style=for-the-badge&logo=github&color=yellow)](https://github.com/HYDRA-TERMUX/Image-Converter/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/HYDRA-TERMUX/Image-Converter?style=for-the-badge&color=red)](https://github.com/HYDRA-TERMUX/Image-Converter/issues)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)]([https://opensource.org/licenses/MIT](https://github.com/HYDRA-TERMUX/Image-Converter/blob/main/Licence.md)
 [![Live Demo](https://img.shields.io/badge/Website-Live-brightgreen?style=for-the-badge)](https://hydra-termux.github.io/Image-Converter/)
 
 </div>

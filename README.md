@@ -1,6 +1,6 @@
 # 🖼️ Image Converter Pro
 
-![Banner](https://raw.githubusercontent.com/HYDRA-TERMUX/Image-Converter/main/assets/banner.png) <!-- Add your banner image -->
+![Banner](https://github.com/HYDRA-TERMUX/Image-Converter/blob/main/main/assets/banner.jpg) <!-- Add your banner image -->
 
 **A powerful client-side image conversion tool** that transforms images between formats directly in your browser. No server required! Perfect for developers, designers, and content creators.
 

@@ -55,6 +55,10 @@
 - GitHub account (for hosting)
 
 ### Local Usage
-1. Clone the repository:
+Clone the repository:
 ```bash
 git clone https://github.com/HYDRA-TERMUX/Image-Converter.git
+
+cd Image-Converter
+
+bash run.sh
